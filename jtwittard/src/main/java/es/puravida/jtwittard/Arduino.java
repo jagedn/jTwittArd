@@ -98,6 +98,7 @@ public class Arduino implements FindTwitterListener, SerialPortEventListener {
 		}
 
 		try {
+			Thread.currentThread().sleep(5*1000);
 			in = serialPort.getInputStream();
 			inReader = new LineNumberReader(new InputStreamReader(in));
 			String handsaking = inReader.readLine();
@@ -111,7 +112,7 @@ public class Arduino implements FindTwitterListener, SerialPortEventListener {
 			outWriter.println(HANDSACKING);
 			outWriter.flush();
 
-		} catch (IOException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			commPort.close();

@@ -12,13 +12,13 @@ void setup() {
 	pinMode(13, OUTPUT);
 
 	//Set pin 13 LED normally ON
-        blink_led();
+        establish_connection();
 }
 
 //Blink LED Function
-void blink_led() {
+void blink_led(int duration) {
 
-	for (int i = 0; i < 7; i++) {
+	for (int i = 0; i < duration; i++) {
 		digitalWrite(13, HIGH);
 		delay(100);
 		digitalWrite(13, LOW);
@@ -37,6 +37,7 @@ void establish_connection(){
     for(int i=0; i<HANDSAKING.length()+1; i++){
       Serial.read();
     }
+    blink_led(1);
 }
 
 //Only called when we get a character via USB/Serial
@@ -44,26 +45,26 @@ void got_char(char x) {
 
 	if (x == HT1) {
 
-		blink_led(); //Makes blink the LED
+		blink_led(3); //Makes blink the LED
 	}
 
 	if (x == HT2) {
 
-		blink_led(); //Makes blink the LED
+		blink_led(5); //Makes blink the LED
 	}
 
 	if (x == HT3) {
 
-		blink_led(); //Makes blink the LED
+		blink_led(7); //Makes blink the LED
 	}
 }
 
 void loop() { //check if there's any data available on serial
-        establish_connection();
-        while (Serial.available() == 0){
-          delay(300);          
-        }	
-        byte byte_read = Serial.read();
-	got_char((char)byte_read);	
+
+  if (Serial.available() == 1){
+    byte byte_read = Serial.read();
+    got_char((char)byte_read);	
+  }
+  
 }
 
