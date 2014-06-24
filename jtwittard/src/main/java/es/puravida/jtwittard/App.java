@@ -32,9 +32,11 @@ public class App {
 		theApp.start();
 	}
 
-	private final static String HASHTAG1 = "jagedn";
-	private final static String HASHTAG2 = "uochrome";
-
+	private ScheduledExecutorService scheduledExecutorService;
+	public ScheduledExecutorService getScheduledExecutorService() {
+		return scheduledExecutorService;
+	} 
+	
 	protected void start() {
 		try {
 			Properties prp = new Properties();
@@ -52,8 +54,6 @@ public class App {
 			}
 
 			List<String> list = new ArrayList<String>();
-			list.add(HASHTAG1);
-			list.add(HASHTAG2);
 			for (int i = 1; i < 4; i++) {
 				if (System.getProperty("hashtag" + i) == null) {
 					break;
@@ -67,8 +67,7 @@ public class App {
 
 			final FindTwitter find = new FindTwitter(hashtags, arduino);
 
-			final ScheduledExecutorService scheduledExecutorService = Executors
-					.newScheduledThreadPool(5);
+			scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
 			final ScheduledFuture scheduledFuture = scheduledExecutorService
 					.scheduleAtFixedRate(new Runnable() {

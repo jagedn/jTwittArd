@@ -33,6 +33,8 @@ public class AppTest
      */
     public void testApp()
     {
-        assertTrue( true );
+        App theApp = new App();
+        theApp.start();
+        theApp.getScheduledExecutorService().shutdown();
     }
 }

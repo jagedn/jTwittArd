@@ -108,6 +108,25 @@
 					</execution>
 				</executions>
 			</plugin>			
+			
+			<plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>1.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <shadedArtifactAttached>true</shadedArtifactAttached> <!-- Make the shaded artifact not the main one -->
+                    <shadedClassifierName>shaded</shadedClassifierName> <!-- set the suffix to the shaded jar -->
+                </configuration>
+            </plugin>
+			
 		</plugins>
 		<pluginManagement>
 			<plugins>
