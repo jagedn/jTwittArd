@@ -12,6 +12,9 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<staging.dir>${project.build.directory}/staging</staging.dir>
+		<wizard.type>install</wizard.type>
+		<izpack.standalone.compiler.version>4.3.2</izpack.standalone.compiler.version>
 	</properties>
 
 	<dependencies>
@@ -35,6 +38,11 @@
 			<groupId>org.twitter4j</groupId>
 			<artifactId>twitter4j-stream</artifactId>
 			<version>[4.0,)</version>
+		</dependency>
+		<dependency>
+			<groupId>org.codehaus.izpack</groupId>
+			<artifactId>izpack-standalone-compiler</artifactId>
+			<version>${izpack.standalone.compiler.version}</version>
 		</dependency>
 	</dependencies>
 
@@ -83,7 +91,7 @@
 						<manifest>
 							<mainClass>es.puravida.jtwittard.App</mainClass>
 							<addClasspath>true</addClasspath>
-							<classpathPrefix>lib/</classpathPrefix>
+							<classpathPrefix>. lib/</classpathPrefix>
 						</manifest>
 					</archive>
 				</configuration>
@@ -107,30 +115,80 @@
 						</configuration>
 					</execution>
 				</executions>
-			</plugin>			
-			
+			</plugin>
 			<plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>1.4</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <shadedArtifactAttached>true</shadedArtifactAttached> <!-- Make the shaded artifact not the main one -->
-                    <shadedClassifierName>shaded</shadedClassifierName> <!-- set the suffix to the shaded jar -->
-                </configuration>
-            </plugin>
-			
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>1.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<shadedArtifactAttached>true</shadedArtifactAttached>
+					<shadedClassifierName>shaded</shadedClassifierName>
+				</configuration>
+			</plugin>
+			<!-- Plugin de izpack para generar el instalador, configurado para que 
+				lo genere en la fase de package -->
+			<plugin>
+				<groupId>org.codehaus.izpack</groupId>
+				<artifactId>izpack-maven-plugin</artifactId>
+				<version>1.0-alpha-5</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>izpack</goal>
+						</goals>
+						<configuration>
+							<izpackBasedir>${staging.dir}</izpackBasedir>
+							<!-- descriptor>install.xml</descriptor -->
+							<installerFile>target/Setup-jTwittArd-${project.version}.jar</installerFile>
+						</configuration>
+					</execution>
+				</executions>
+				<dependencies>
+					<dependency>
+						<groupId>org.codehaus.izpack</groupId>
+						<artifactId>izpack-standalone-compiler</artifactId>
+						<version>${izpack.standalone.compiler.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+			<plugin>
+				<artifactId>maven-resources-plugin</artifactId>
+				<version>2.4.2</version>
+				<executions>
+					<execution>
+						<id>copy-resources</id>
+						<phase>validate</phase>
+						<goals>
+							<goal>copy-resources</goal>
+						</goals>
+						<configuration>
+							<encoding>UTF-8</encoding>
+							<overwrite>true</overwrite>
+							<outputDirectory>${staging.dir}</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/izpack</directory>
+								</resource>
+							</resources>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 		<pluginManagement>
 			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<!--This plugin's configuration is used to store Eclipse m2e settings 
+					only. It has no influence on the Maven build itself. -->
 				<plugin>
 					<groupId>org.eclipse.m2e</groupId>
 					<artifactId>lifecycle-mapping</artifactId>

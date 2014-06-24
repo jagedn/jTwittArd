@@ -1,5 +1,6 @@
 package es.puravida.jtwittard;
 
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -33,15 +34,23 @@ public class App {
 	}
 
 	private ScheduledExecutorService scheduledExecutorService;
+
 	public ScheduledExecutorService getScheduledExecutorService() {
 		return scheduledExecutorService;
-	} 
-	
+	}
+
 	protected void start() {
+
+		scheduledExecutorService = Executors.newScheduledThreadPool(1);
+
 		try {
 			Properties prp = new Properties();
-			prp.load(ClassLoader
-					.getSystemResourceAsStream("jtwittard.properties"));
+			try {
+				prp.load(ClassLoader
+						.getSystemResourceAsStream("/jtwittard.properties"));
+			} catch (Exception e) {
+				prp.load(new FileInputStream("./jtwittard.properties"));
+			}
 			for (Map.Entry<Object, Object> entry : prp.entrySet()) {
 				if (System.getProperties().get(entry.getKey()) == null)
 					System.getProperties()
@@ -58,16 +67,17 @@ public class App {
 				if (System.getProperty("hashtag" + i) == null) {
 					break;
 				}
-				list.add("#"+System.getProperty("hashtag" + i));
+				if (System.getProperty("hashtag" + i).trim().length() == 0) {
+					continue;
+				}
+				list.add("#" + System.getProperty("hashtag" + i).trim());
 			}
 			String[] hashtags = list.toArray(new String[list.size()]);
-			for(String s : hashtags){
-				System.out.println("Searching for "+s);
+			for (String s : hashtags) {
+				System.out.println("Searching for " + s);
 			}
 
 			final FindTwitter find = new FindTwitter(hashtags, arduino);
-
-			scheduledExecutorService = Executors.newScheduledThreadPool(1);
 
 			final ScheduledFuture scheduledFuture = scheduledExecutorService
 					.scheduleAtFixedRate(new Runnable() {
