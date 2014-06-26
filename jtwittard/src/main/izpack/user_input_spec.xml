@@ -1,0 +1,69 @@
+<userInput>
+	<panel id="panelHashtags">
+
+		<field type="title" txt="Configura hasta 4 Hashtags" bold="true"
+			size="2" />
+		<field type="divider" align="top" />
+
+		<field type="staticText" align="left" txt="Hashtag 1" />
+		<field type="text" align="left" variable="hashtag1">
+			<spec txt="" size="15" set="" />
+		</field>
+		<field type="space" />
+
+		<field type="staticText" align="left" txt="Hashtag 2" />
+		<field type="text" align="left" variable="hashtag2">
+			<spec txt="" size="15" set="" />
+		</field>
+		<field type="space" />
+
+		<field type="staticText" align="left" txt="Hashtag 3" />
+		<field type="text" align="left" variable="hashtag3">
+			<spec txt="" size="15" set="" />
+		</field>
+		<field type="space" />
+
+		<field type="staticText" align="left" txt="Hashtag 4" />
+		<field type="text" align="left" variable="hashtag4">
+			<spec txt="" size="15" set="" />
+		</field>
+		<field type="space" />
+
+	</panel>
+
+	<panel id="comPortWindowsPanel">
+		<field type="title" txt="Puerto COM asignado" bold="true" size="2" />
+		<field type="divider" align="top" />
+
+		<field type="combo" variable="comport">
+			<description align="left"
+				txt="Selecciona el puerto COM que te ha asignado tu sistema.\nUsualmente es el puerto COM3" />
+			<spec>
+				<choice txt="COM1" id="COM1" value="COM1" />
+				<choice txt="COM2" id="COM2" value="COM2" />
+				<choice txt="COM3" id="COM3" value="COM3" />
+				<choice txt="COM4" id="COM4" value="COM4" />
+				<choice txt="COM5" id="COM5" value="COM5" />
+				<choice txt="COM6" id="COM6" value="COM6" />
+				<choice txt="COM7" id="COM7" value="COM7" />
+				<choice txt="COM8" id="COM8" value="COM8" />
+				<choice txt="COM9" id="COM9" value="COM9" />
+				<choice txt="COM10" id="COM10" value="COM10" />
+				<choice txt="COM11" id="COM11" value="COM11" />
+				<choice txt="COM12" id="COM12" value="COM12" />
+			</spec>
+		</field>
+	</panel>
+
+	<panel id="proxyPanel">
+		<field type="title" txt="Si utilizas un proxy para acceder a Internet."
+			bold="true" size="2" />
+		<field type="text" variable="proxyaddress">
+			<spec txt="Proxy Host:" id="" size="25" set="" />
+		</field>
+		<field type="text" variable="proxyPort">
+			<spec txt="Proxy Port:" id="" size="6" set="" />
+		</field>
+	</panel>
+
+</userInput>

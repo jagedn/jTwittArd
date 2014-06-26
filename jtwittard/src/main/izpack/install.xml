@@ -8,23 +8,12 @@
 		</authors>
 	</info>
 
-	<guiprefs width="800" height="600" resizable="no">
-		<splash>images/peas_load.gif</splash>
-		<laf name="substance">
-			<os family="windows" />
-			<os family="unix" />
-			<param name="variant" value="mist-silver" />
-		</laf>
-		<laf name="substance">
-			<os family="mac" />
-			<param name="variant" value="mist-aqua" />
-		</laf>
+	<guiprefs width="640" height="480" resizable="no">
 		<modifier key="useHeadingPanel" value="yes" />
 	</guiprefs>
 
 	<resources>
-		<res id="userInputSpec.xml" src="hashtag_input_spec.xml" parse="yes"
-			type="xml" />
+		<res id="userInputSpec.xml" src="user_input_spec.xml" />
 		<res id="LicencePanel.licence" src="gpl.txt" />
 	</resources>
 
@@ -33,17 +22,19 @@
 	</locale>
 
 	<panels>
-		<panel classname="HelloPanel" />
+	    <panel classname="HelloPanel" />
 		<panel classname="LicencePanel" />
 		<panel classname="TargetPanel" />
 		<panel classname="UserInputPanel" id="panelHashtags" />
+        <panel classname="UserInputPanel" id="comPortWindowsPanel">
+              <os family="windows"/>
+        </panel>
+        <panel classname="UserInputPanel" id="proxyPanel" />
 		<panel classname="InstallPanel" />
 		<panel classname="FinishPanel" />
 	</panels>
 
 	<variables>
-		<variable name="app-version" value="1.4" />
-		<variable name="released-on" value="08/03/2002" />
 	</variables>
 
 	<packs>
