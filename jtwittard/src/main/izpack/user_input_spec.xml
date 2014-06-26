@@ -8,6 +8,10 @@
 		<field type="staticText" align="left" txt="Hashtag 1" />
 		<field type="text" align="left" variable="hashtag1">
 			<spec txt="" size="15" set="" />
+			<validator class="com.izforge.izpack.util.RegularExpressionValidator"
+				txt="Es necesario al menos un hashtag!">
+				<param name="pattern" value="^[a-zA-Z0-9._-]{3,15}$"/>
+			</validator>
 		</field>
 		<field type="space" />
 
@@ -37,7 +41,7 @@
 
 		<field type="combo" variable="comport">
 			<description align="left"
-				txt="Selecciona el puerto COM que te ha asignado tu sistema.\nUsualmente es el puerto COM3" />
+				txt="Selecciona el puerto COM que te ha asignado tu sistema. Usualmente es el puerto COM3" />
 			<spec>
 				<choice txt="COM1" id="COM1" value="COM1" />
 				<choice txt="COM2" id="COM2" value="COM2" />
