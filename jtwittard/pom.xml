@@ -50,7 +50,14 @@
 		<url>scm:git:git@github.com:jagedn/jTwittArd.git</url>
 		<developerConnection>scm:git:git@github.com:jagedn/jTwittArd.git</developerConnection>
 	</scm>
-
+    <distributionManagement>
+        <repository>
+            <id>github</id>
+            <name>github</name>
+            <url>https://github.com/jagedn/jTwittArd/raw/master/production</url>    
+        </repository>
+    </distributionManagement>
+	
 	<repositories>
 		<repository>
 			<id>root1-releases</id>
