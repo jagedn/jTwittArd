@@ -3,7 +3,7 @@
 
 	<groupId>es.puravida</groupId>
 	<artifactId>jtwittard</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>jtwittard</name>
@@ -46,15 +46,14 @@
 	</dependencies>
 
 	<scm>
-		<connection>scm:git:git@github.com:jagedn/jTwittArd.git/jtwittard</connection>
-		<url>scm:git:git@github.com:jagedn/jTwittArd.git/jtwittard</url>
-		<developerConnection>scm:git:git@github.com:jagedn/jTwittArd.git/jtwittard</developerConnection>
+		<connection>scm:git:git@github.com:jagedn/jTwittArd.git</connection>
+		<developerConnection>scm:git:git@github.com:jagedn/jTwittArd.git</developerConnection>
+		<url>https://github.com/jagedn/jTwittArd</url>
 	</scm>
     <distributionManagement>
         <repository>
-            <id>github</id>
-            <name>github</name>
-            <url>https://github.com/jagedn/jTwittArd/raw/master/production</url>    
+            <id>filesystem</id>
+            <url>file:../../production</url>    
         </repository>
     </distributionManagement>
 	
