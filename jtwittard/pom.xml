@@ -3,7 +3,7 @@
 
 	<groupId>es.puravida</groupId>
 	<artifactId>jtwittard</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
 	<name>jtwittard</name>
@@ -14,6 +14,7 @@
 		<staging.dir>${project.build.directory}/staging</staging.dir>
 		<wizard.type>install</wizard.type>
 		<izpack.standalone.compiler.version>4.3.2</izpack.standalone.compiler.version>
+		<yajsw.home>${yajsw.install_home}</yajsw.home>
 	</properties>
 
 	<dependencies>
@@ -49,7 +50,8 @@
 		<connection>scm:git:git@github.com:jagedn/jTwittArd.git</connection>
 		<developerConnection>scm:git:git@github.com:jagedn/jTwittArd.git</developerConnection>
 		<url>https://github.com/jagedn/jTwittArd</url>
-	</scm>
+	  <tag>HEAD</tag>
+  </scm>
     <distributionManagement>
         <repository>
             <id>filesystem</id>
@@ -186,14 +188,17 @@
 							<overwrite>true</overwrite>
 							<outputDirectory>${staging.dir}</outputDirectory>
 							<resources>
-								<resource>
-									<directory>src/main/izpack</directory>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
+                                <resource>
+                                    <directory>${yajsw.home}</directory>
+                                </resource>
+                                <resource>
+                                    <directory>src/main/izpack</directory>
+                                </resource>                                
+                                </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-release-plugin</artifactId>

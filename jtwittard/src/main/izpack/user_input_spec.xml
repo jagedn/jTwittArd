@@ -60,14 +60,23 @@
 	</panel>
 
 	<panel id="proxyPanel">
-		<field type="title" txt="Si utilizas un proxy para acceder a Internet."
-			bold="true" size="2" />
-		<field type="text" variable="proxyaddress">
-			<spec txt="Proxy Host:" id="" size="25" set="" />
-		</field>
-		<field type="text" variable="proxyPort">
-			<spec txt="Proxy Port:" id="" size="6" set="" />
-		</field>
+	    
+        <field type="title" txt="Configura el proxy y puerto si es necesario" bold="true"
+            size="2" />
+        <field type="divider" align="top" />
+
+        <field type="staticText" align="left" txt="Proxy" />
+        <field type="text" align="left" variable="proxyaddress">
+            <spec txt="" size="50" set="" />
+        </field>
+        <field type="space" />
+	    	    
+        <field type="staticText" align="left" txt="Puerto" />
+        <field type="text" align="left" variable="proxyPort">
+            <spec txt="" size="5" set="" />
+        </field>
+        <field type="space" />
+        	    		
 	</panel>
 
 </userInput>

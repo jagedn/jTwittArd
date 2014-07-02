@@ -14,7 +14,10 @@
 
 	<resources>
 		<res id="userInputSpec.xml" src="user_input_spec.xml" />
+		<res id="ProcessPanel.Spec.xml" src="processPanelSpec.xml" />
 		<res id="LicencePanel.licence" src="gpl.txt" />
+		<res id="HTMLInfoPanel.readme" src="readme.html"/>
+		<res src="logo.jpg" id="logo"/>
 	</resources>
 
 	<locale>
@@ -22,7 +25,7 @@
 	</locale>
 
 	<panels>
-	    <panel classname="HelloPanel" />
+	    <panel classname="HTMLInfoPanel" id="readme" />
 		<panel classname="LicencePanel" />
 		<panel classname="TargetPanel" />
 		<panel classname="UserInputPanel" id="panelHashtags" />
@@ -31,7 +34,10 @@
         </panel>
         <panel classname="UserInputPanel" id="proxyPanel" />
 		<panel classname="InstallPanel" />
-		<panel classname="FinishPanel" />
+		<panel classname="ProcessPanel" id="WindowsInstallService">
+              <os family="windows"/>
+        </panel>
+		<panel classname="SimpleFinishPanel" />
 	</panels>
 
 	<variables>
@@ -39,13 +45,24 @@
 
 	<packs>
 		<pack name="ejecutables" required="yes">
-			<description>Jar Libs</description>
+			<description>The Application</description>
+			
 			<fileset dir=".." targetdir="${INSTALL_PATH}">
 				<include name="*-shaded.jar" />
 			</fileset>
+			
+			<fileset dir="." targetdir="${INSTALL_PATH}">
+                <include name="**/*" />
+                <exclude name="install.xml"/>
+                <exclude name="user_input_spec.xml"/>
+            </fileset>
+            
 			<file src="jtwittard.properties" targetdir="${INSTALL_PATH}" />
+			
 			<parsable encoding="UTF-8" targetfile="${INSTALL_PATH}/jtwittard.properties"
 				type="javaprop" />
+            <parsable encoding="UTF-8" targetfile="${INSTALL_PATH}/conf/wrapper.conf"
+                type="javaprop" />
 		</pack>
 	</packs>
 </installation>

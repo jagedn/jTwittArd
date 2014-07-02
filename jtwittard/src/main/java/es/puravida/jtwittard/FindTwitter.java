@@ -43,7 +43,7 @@ public class FindTwitter {
 		twitter = tf.getInstance();
 	}
 
-	void search() throws Exception {
+	boolean search() throws Exception {
 		for (int i = 0; i < search.length; i++) {
 			Query query = new Query(search[i]);
 			QueryResult result = twitter.search(query);
@@ -52,11 +52,13 @@ public class FindTwitter {
 					System.out.println("@" + status.getUser().getScreenName()
 							+ ":" + status.getText());
 					last[i] = status.getCreatedAt().getTime();
-					listener.hashtagFounded(i, search[i], status.getUser()
-							.getScreenName());
+					if( !listener.hashtagFounded(i, search[i], status.getUser()
+							.getScreenName()))
+						return false;
 				}
 			}
 		}
+		return true;
 	}
 
 }

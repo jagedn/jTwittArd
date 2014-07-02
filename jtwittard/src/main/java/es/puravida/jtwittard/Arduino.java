@@ -30,7 +30,6 @@ public class Arduino implements FindTwitterListener, SerialPortEventListener {
 
 	}
 
-	CommPortIdentifier portIdentifier = null;
 	InputStream in = null;
 	OutputStream out = null;
 	LineNumberReader inReader;
@@ -38,35 +37,36 @@ public class Arduino implements FindTwitterListener, SerialPortEventListener {
 
 	public boolean initialize() {
 		try {
+
 			String portName = System.getProperty("usb.port");
 			if (portName == null)
 				portName = "COM3";
-
-			CommPortIdentifier portId = null;
-			portId = CommPortIdentifier.getPortIdentifier(portName);
-			if (initializePort(portName, portId)) {
+			if (initializePort(portName)) {
 				return true;
 			}
 			
-			System.setProperty("gnu.io.rxtx.SerialPorts", "/dev/ttyACM0");
-
 			Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
 			while (portEnum.hasMoreElements()) {
 				CommPortIdentifier currPortId = (CommPortIdentifier) portEnum
 						.nextElement();
-				if (initializePort(portName, currPortId)) {
+				if (initializePort(currPortId.getName())) {
 					return true;
 				}
 			}
+			
 		} catch (Exception e) {
-			e.printStackTrace();
+			System.out.println(e);
 		}
 		return false;
 	}
 
-	private boolean initializePort(String portName,
-			CommPortIdentifier portIdentifier) {
-
+	private boolean initializePort(String portName) throws Exception{
+		System.out.println("Trying ..."+portName);
+		CommPortIdentifier portIdentifier = null;
+		System.setProperty("gnu.io.rxtx.SerialPorts", portName);
+		
+		portIdentifier = CommPortIdentifier.getPortIdentifier(portName);
+		
 		if (portIdentifier.isCurrentlyOwned()) {
 			System.out.println("Error: Port is currently in use");
 			return false;
@@ -77,7 +77,7 @@ public class Arduino implements FindTwitterListener, SerialPortEventListener {
 			commPort = portIdentifier.open(this.getClass().getName(), 2000);
 		} catch (PortInUseException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			System.out.println(e1);
 			return false;
 		}
 
@@ -92,7 +92,7 @@ public class Arduino implements FindTwitterListener, SerialPortEventListener {
 					SerialPort.STOPBITS_1, SerialPort.PARITY_NONE);
 		} catch (UnsupportedCommOperationException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 			commPort.close();
 			return false;
 		}
@@ -113,8 +113,7 @@ public class Arduino implements FindTwitterListener, SerialPortEventListener {
 			outWriter.flush();
 
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println(e);
 			commPort.close();
 			return false;
 		}
@@ -127,23 +126,24 @@ public class Arduino implements FindTwitterListener, SerialPortEventListener {
 	@Override
 	public void serialEvent(SerialPortEvent arg0) {
 		// TODO Auto-generated method stub
-
+		System.out.println(arg0.toString());
 	}
 
 	public boolean getFound() {
 		return found;
 	}
 
-	public void hashtagFounded(int index, String hashtag, String author) {
+	public boolean hashtagFounded(int index, String hashtag, String author) {
 		if (!found)
-			return;
+			return false;
 		try {
 			out.write('A' + index);
 			out.flush();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
+		} catch (Exception e1) {
+			System.out.println(e1);
+			return false;
 		}
+		return true;
 	}
 
 }
