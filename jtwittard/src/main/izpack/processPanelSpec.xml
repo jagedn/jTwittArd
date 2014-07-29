@@ -3,6 +3,7 @@
 <processing>
  
   <job name="WindowsInstallService">
+    <os family="windows" />
     <executefile name="$INSTALL_PATH/bat/installService.bat">      
     </executefile>
   </job>
